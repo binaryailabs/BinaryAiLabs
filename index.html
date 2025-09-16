@@ -3,17 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Bot Hub - Your Gateway to Intelligent Automation</title>
+    <meta name="description" content="AI Bot Hub for Toastmasters - Discover AI assistants for public speaking, leadership, and club management.">
+    <meta name="keywords" content="Toastmasters, AI bots, public speaking, leadership, automation">
+    <title>AI Bot Hub for Toastmasters</title>
     <style>
         :root {
             --toastmaster-blue: #004165;
             --toastmaster-light-blue: #0066a1;
-            --toastmaster-gold: #d4a574;
+            --toastmaster-gold: #f2df74;
             --toastmaster-light-gold: #e6c799;
+            --toastmaster-maroon: #772432;
             --white: #ffffff;
             --light-gray: #f8f9fa;
             --dark-gray: #2c3e50;
             --success-green: #27ae60;
+            --error-red: #e74c3c;
             --shadow: 0 10px 30px rgba(0, 65, 101, 0.1);
             --shadow-hover: 0 20px 40px rgba(0, 65, 101, 0.2);
         }
@@ -47,6 +51,7 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             transform: translateY(-100%);
             animation: slideDown 0.5s ease-out 1s forwards;
+            cursor: pointer;
         }
 
         .banner-text {
@@ -152,7 +157,7 @@
         .stat-number {
             font-size: 2rem;
             font-weight: bold;
-            color: var(--toastmaster-gold);
+            color: var(--toastmaster-maroon);
             display: block;
         }
 
@@ -174,6 +179,27 @@
             }
         }
 
+        /* Search Bar */
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto 40px;
+        }
+
+        #bot-search {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        #bot-search:focus {
+            outline: none;
+            border-color: var(--toastmaster-gold);
+            box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.1);
+        }
+
         /* Bots Grid */
         .bots-section {
             padding: 80px 0;
@@ -188,9 +214,27 @@
             font-weight: 700;
         }
 
+        .section-title2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--white);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
         .section-subtitle {
             text-align: center;
-            color: var(--toastmaster-light-blue);
+            color: var(--toastmaster-maroon);
+            margin-bottom: 60px;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section-subtitle2 {
+            text-align: center;
+            color: var(--white);
             margin-bottom: 60px;
             font-size: 1.1rem;
             max-width: 600px;
@@ -298,6 +342,7 @@
             padding: 40px;
             border-radius: 20px;
             box-shadow: var(--shadow-hover);
+            color: var(--dark-gray);
         }
 
         .form-group {
@@ -395,6 +440,7 @@
             color: var(--white);
             text-decoration: none;
             transition: all 0.3s ease;
+            font-size: 18px;
         }
 
         .social-link:hover {
@@ -415,10 +461,15 @@
             transform: translateX(400px);
             transition: transform 0.3s ease;
             z-index: 1001;
+            max-width: 300px;
         }
 
         .toast.show {
             transform: translateX(0);
+        }
+
+        .toast.error {
+            background: var(--error-red);
         }
 
         /* Responsive Design */
@@ -438,6 +489,7 @@
 
             .stats-bar {
                 gap: 20px;
+                flex-wrap: wrap;
             }
 
             .stat-number {
@@ -495,11 +547,11 @@
         <div class="header-bg"></div>
         <div class="container">
             <div class="creator-image">
-                <!-- Replace with your image: <img src="your-image.jpg" alt="Creator" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"> -->
-                AI
+                <img src="assets/images/creator.png" alt="Akshay Singh, DTM - Creator" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: top center; border-radius: 50%;">
             </div>
-            <h1>AI Bot Hub</h1>
-            <p class="subtitle">Your Gateway to Intelligent Automation & Custom AI Solutions</p>
+            <h2>Akshay Singh, DTM</h2>
+            <h1>GPT Bots for Toastmasters</h1>
+            <p class="subtitle">Your Gateway to Intelligent Automation & Custom AI Solutions for members, club officers and district officers</p>
             
             <div class="stats-bar">
                 <div class="stat">
@@ -507,11 +559,15 @@
                     <span class="stat-label">Active Bots</span>
                 </div>
                 <div class="stat">
-                    <span class="stat-number" id="user-count">1.2k</span>
+                    <span class="stat-number" id="user-count">0.5k</span>
                     <span class="stat-label">Happy Users</span>
                 </div>
                 <div class="stat">
-                    <span class="stat-number" id="request-count">47</span>
+                    <span class="stat-number" id="requests-received">10</span>
+                    <span class="stat-label">Requests Received</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" id="requests-fulfilled">5</span>
                     <span class="stat-label">Requests Fulfilled</span>
                 </div>
             </div>
@@ -521,76 +577,133 @@
     <!-- Bots Section -->
     <section class="bots-section">
         <div class="container">
-            <h2 class="section-title">Available AI Bots</h2>
-            <p class="section-subtitle">Discover powerful AI assistants designed to streamline your workflow and boost productivity</p>
-            
+            <h2 class="section-title">Available AI Bots for Toastmasters</h2>
+            <p class="section-subtitle">Discover powerful AI assistants designed to streamline <br>your learning journey and make it more productive.</p>
+            <div class="search-container">
+                <input type="text" id="bot-search" placeholder="Search bots by name or tag...">
+            </div>
             <div class="bots-grid" id="botsGrid">
-                <!-- Sample bots - you can modify these -->
-                <div class="bot-card" onclick="openBot('https://chat.openai.com/g/g-example1')">
-                    <div class="bot-icon">📝</div>
-                    <h3 class="bot-title">Content Writer Pro</h3>
-                    <p class="bot-description">Creates engaging blog posts, articles, and marketing copy with SEO optimization.</p>
+
+                <!-- TM_Rhetorical Devices -->
+                <div class="bot-card" role="button" aria-label="Open Rhetorical Devices Bot" onclick="openBot('https://chatgpt.com/g/g-68b7452f68808191b9429590165c091f-tm-rhetorical-devices')">
+                    <div class="bot-icon">🗣️</div>
+                    <h3 class="bot-title">Rhetorical Devices</h3>
+                    <p class="bot-description">Learn about rhetorical devices and use them to enhance your speeches.</p>
                     <div class="bot-tags">
-                        <span class="tag">Writing</span>
-                        <span class="tag">SEO</span>
-                        <span class="tag">Marketing</span>
+                        <span class="tag">Speaking</span>
+                        <span class="tag">Language</span>
+                        <span class="tag">Creativity</span>
                     </div>
                 </div>
 
-                <div class="bot-card" onclick="openBot('https://chat.openai.com/g/g-example2')">
+                <!-- TM_RealWorldSkills -->
+                <div class="bot-card" role="button" aria-label="Open Real World Skills Bot" onclick="openBot('https://chatgpt.com/g/g-68a036d9de3c8191a0019c170e5c9fa6-tm-realworldskills')">
                     <div class="bot-icon">💼</div>
-                    <h3 class="bot-title">Business Analyst</h3>
-                    <p class="bot-description">Analyzes market trends, creates reports, and provides strategic insights for decision making.</p>
+                    <h3 class="bot-title">Real World Skills</h3>
+                    <p class="bot-description">Discover how Toastmasters roles build real-world professional skills.</p>
+                    <div class="bot-tags">
+                        <span class="tag">Skills</span>
+                        <span class="tag">Leadership</span>
+                        <span class="tag">Career</span>
+                    </div>
+                </div>
+                
+                <!-- TM_Evaluation Helper -->
+                <div class="bot-card" role="button" aria-label="Open Evaluation Helper Bot" onclick="openBot('https://chatgpt.com/g/g-68902ad828b48191adccd41bb399b99e-tm-evaluation-helper')">
+                    <div class="bot-icon">📝</div>
+                    <h3 class="bot-title">Evaluation Helper</h3>
+                    <p class="bot-description">Practice and learn techniques to give effective speech evaluations.</p>
+                    <div class="bot-tags">
+                        <span class="tag">Evaluation</span>
+                        <span class="tag">Feedback</span>
+                        <span class="tag">Training</span>
+                    </div>
+                </div>
+
+                <!-- TM_ContestRuleBook -->
+                <div class="bot-card" role="button" aria-label="Open Contest RuleBook Bot" onclick="openBot('https://chatgpt.com/g/g-68871fcc1bb081918350f6762cfd6ec0-tm-contestrulebook')">
+                    <div class="bot-icon">⚖️</div>
+                    <h3 class="bot-title">Contest RuleBook</h3>
+                    <p class="bot-description">Answer all your queries related to Toastmasters contest rules.</p>
+                    <div class="bot-tags">
+                        <span class="tag">Contests</span>
+                        <span class="tag">Rules</span>
+                        <span class="tag">Governance</span>
+                    </div>
+                </div>
+
+                <!-- TM_Brand Manual Bot (Fixed: Coming Soon) -->
+                <div class="bot-card" role="button" aria-label="Brand Manual Bot - Coming Soon" onclick="alert('This bot is coming soon! Stay tuned.');">
+                    <div class="bot-icon">🎨</div>
+                    <h3 class="bot-title">Brand Manual Bot</h3>
+                    <p class="bot-description">Your branding guide for Toastmasters rules, tips, and best practices.</p>
+                    <div class="bot-tags">
+                        <span class="tag">Branding</span>
+                        <span class="tag">Guidelines</span>
+                        <span class="tag">Resources</span>
+                    </div>
+                </div>
+
+                <!-- TM_Agenda Generator -->
+                <div class="bot-card" role="button" aria-label="Open Agenda Generator Bot" onclick="openBot('https://chatgpt.com/g/g-6895250d72508191a88883716e574c06-tm-agenda-excel-generator')">
+                    <div class="bot-icon">🗓️</div>
+                    <h3 class="bot-title">Agenda Generator</h3>
+                    <p class="bot-description">Quickly generate a complete meeting agenda from your inputs.</p>
+                    <div class="bot-tags">
+                        <span class="tag">Meeting</span>
+                        <span class="tag">Planning</span>
+                        <span class="tag">Automation</span>
+                    </div>
+                </div>
+
+                <!-- TM_FlyerFeedback -->
+                <div class="bot-card" role="button" aria-label="Open Flyer Feedback Bot" onclick="openBot('https://chatgpt.com/g/g-68890ba88bc88191acdb00bd8508edc6-tm-flyerfeedback')">
+                    <div class="bot-icon">🖼️</div>
+                    <h3 class="bot-title">Flyer Feedback</h3>
+                    <p class="bot-description">Review your flyer for Toastmasters branding guidelines and get suggestions.</p>
+                    <div class="bot-tags">
+                        <span class="tag">Branding</span>
+                        <span class="tag">Design</span>
+                        <span class="tag">Review</span>
+                    </div>
+                </div>
+
+                <!-- TM_D98FindAClub -->
+                <div class="bot-card" role="button" aria-label="Open D98 Find A Club Bot" onclick="openBot('https://chatgpt.com/g/g-68aca38512e88191b3ac66070f86a26c-tm-d98findaclub')">
+                    <div class="bot-icon">📍</div>
+                    <h3 class="bot-title">D98 Find A Club</h3>
+                    <p class="bot-description">Find a Toastmasters club that suits your location and interests in District 98.</p>
+                    <div class="bot-tags">
+                        <span class="tag">ClubSearch</span>
+                        <span class="tag">Membership</span>
+                        <span class="tag">Location</span>
+                    </div>
+                </div>
+
+                <!-- TM_Dashboard -->
+                <div class="bot-card" role="button" aria-label="Open District 98 Dashboard Bot" onclick="openBot('https://chatgpt.com/g/g-6889bb900fc48191a340cd4a122209ff-tm-dashboard')">
+                    <div class="bot-icon">📊</div>
+                    <h3 class="bot-title">District 98 Dashboard</h3>
+                    <p class="bot-description">Answer questions and view insights from the District 98 dashboard.</p>
                     <div class="bot-tags">
                         <span class="tag">Analytics</span>
-                        <span class="tag">Strategy</span>
+                        <span class="tag">District98</span>
                         <span class="tag">Reports</span>
                     </div>
                 </div>
 
-                <div class="bot-card" onclick="openBot('https://chat.openai.com/g/g-example3')">
-                    <div class="bot-icon">🎨</div>
-                    <h3 class="bot-title">Design Assistant</h3>
-                    <p class="bot-description">Helps with UI/UX design, color schemes, and creative visual solutions.</p>
+                <!-- TM_HoFAwards -->
+                <div class="bot-card" role="button" aria-label="Open Hall of Fame Awards Bot" onclick="openBot('https://chatgpt.com/g/g-6889045ddbdc8191bc090d543aeb79f9-tm-hofawards')">
+                    <div class="bot-icon">🏆</div>
+                    <h3 class="bot-title">Hall of Fame Awards</h3>
+                    <p class="bot-description">Learn about awards, criteria, deadlines, and recognition opportunities.</p>
                     <div class="bot-tags">
-                        <span class="tag">Design</span>
-                        <span class="tag">UI/UX</span>
-                        <span class="tag">Creative</span>
+                        <span class="tag">Awards</span>
+                        <span class="tag">Recognition</span>
+                        <span class="tag">Incentives</span>
                     </div>
                 </div>
 
-                <div class="bot-card" onclick="openBot('https://chat.openai.com/g/g-example4')">
-                    <div class="bot-icon">💻</div>
-                    <h3 class="bot-title">Code Mentor</h3>
-                    <p class="bot-description">Provides coding help, code reviews, and programming tutorials across multiple languages.</p>
-                    <div class="bot-tags">
-                        <span class="tag">Programming</span>
-                        <span class="tag">Education</span>
-                        <span class="tag">Debug</span>
-                    </div>
-                </div>
-
-                <div class="bot-card" onclick="openBot('https://chat.openai.com/g/g-example5')">
-                    <div class="bot-icon">📊</div>
-                    <h3 class="bot-title">Data Wizard</h3>
-                    <p class="bot-description">Analyzes datasets, creates visualizations, and extracts meaningful insights from data.</p>
-                    <div class="bot-tags">
-                        <span class="tag">Data Science</span>
-                        <span class="tag">Analytics</span>
-                        <span class="tag">Visualization</span>
-                    </div>
-                </div>
-
-                <div class="bot-card" onclick="openBot('https://chat.openai.com/g/g-example6')">
-                    <div class="bot-icon">🗣️</div>
-                    <h3 class="bot-title">Speech Coach</h3>
-                    <p class="bot-description">Helps improve public speaking skills, presentation delivery, and communication techniques.</p>
-                    <div class="bot-tags">
-                        <span class="tag">Public Speaking</span>
-                        <span class="tag">Communication</span>
-                        <span class="tag">Training</span>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -598,10 +711,10 @@
     <!-- Request Section -->
     <section class="request-section" id="request-section">
         <div class="container">
-            <h2 class="section-title">Request a Custom Bot</h2>
-            <p class="section-subtitle">Have a specific need? Let me create a custom AI bot tailored to your requirements!</p>
+            <h2 class="section-title2">Request a Custom Bot</h2>
+            <p class="section-subtitle2">Have a specific need? <br>Let me create a custom AI bot tailored to your requirements!</p>
             
-            <form class="request-form" id="requestForm">
+            <form class="request-form" id="requestForm" action="https://script.google.com/macros/s/AKfycbxO6cf3-CwyS7pU9iJJGNayxmQBTyhyS9yaDi3lZQEpKsRCxhOCD3C03F-w8ZfZsyrL/exec" method="POST" target="hidden_iframe">
                 <div class="form-group">
                     <label for="name">Your Name *</label>
                     <input type="text" id="name" name="name" required>
@@ -616,18 +729,41 @@
                     <label for="bot-type">Bot Category</label>
                     <select id="bot-type" name="bot-type">
                         <option value="">Select a category</option>
-                        <option value="business">Business & Finance</option>
-                        <option value="creative">Creative & Design</option>
-                        <option value="technical">Technical & Development</option>
-                        <option value="education">Education & Training</option>
-                        <option value="productivity">Productivity & Organization</option>
+                        <option value="analytics">Analytics</option>
+                        <option value="awards">Awards</option>
+                        <option value="branding">Branding</option>
+                        <option value="career">Career</option>
+                        <option value="clubsearch">ClubSearch</option>
+                        <option value="contests">Contests</option>
+                        <option value="creativity">Creativity</option>
+                        <option value="design">Design</option>
+                        <option value="evaluation">Evaluation</option>
+                        <option value="feedback">Feedback</option>
+                        <option value="governance">Governance</option>
+                        <option value="guidelines">Guidelines</option>
+                        <option value="language">Language</option>
+                        <option value="leadership">Leadership</option>
+                        <option value="location">Location</option>
+                        <option value="meeting">Meeting</option>
+                        <option value="membership">Membership</option>
+                        <option value="planning">Planning</option>
+                        <option value="reports">Reports</option>
+                        <option value="resources">Resources</option>
+                        <option value="rules">Rules</option>
+                        <option value="skills">Skills</option>
+                        <option value="speaking">Speaking</option>
+                        <option value="training">Training</option>
+                        <option value="automation">Automation</option>
+                        <option value="recognition">Recognition</option>
+                        <option value="incentives">Incentives</option>
+                        <option value="review">Review</option>
                         <option value="other">Other</option>
                     </select>
                 </div>
                 
                 <div class="form-group">
                     <label for="bot-name">Proposed Bot Name</label>
-                    <input type="text" id="bot-name" name="bot-name" placeholder="What would you like to call your bot?">
+                    <input type="text" id="bot-name" name="bot-name" placeholder="What would you like to call yourbot?">
                 </div>
                 
                 <div class="form-group">
@@ -650,6 +786,9 @@
                     <span class="loading" style="display: none;"></span>
                 </button>
             </form>
+            
+            <!-- Hidden iframe to prevent page reload on form submit -->
+            <iframe name="hidden_iframe" style="display:none;"></iframe>
         </div>
     </section>
 
@@ -657,14 +796,13 @@
     <footer>
         <div class="container">
             <div class="footer-content">
-                <p>&copy; 2024 AI Bot Hub. Empowering productivity through intelligent automation.</p>
+                <p>&copy; 2025 BinaryAILabs. Empowering productivity for learning through intelligent automation.</p>
                 <div class="social-links">
-                    <a href="#" class="social-link">📧</a>
-                    <a href="#" class="social-link">💼</a>
-                    <a href="#" class="social-link">🐙</a>
+                    <a href="https://linkedin.com/in/yourprofile" class="social-link" aria-label="LinkedIn">💼</a>
+                    <a href="https://x.com/yourhandle" class="social-link" aria-label="X (Twitter)">🐦</a>
                 </div>
             </div>
-            <p style="font-size: 0.9rem; opacity: 0.8;">Built with ❤️ for the AI community</p>
+            <p style="font-size: 0.9rem; opacity: 0.8;">Built with ❤️ for the Toastmasters community</p>
         </div>
     </footer>
 
@@ -676,6 +814,10 @@
     <script>
         // Bot interaction
         function openBot(url) {
+            if (url === 'YOUR_LINK_HERE') {
+                alert('This bot is coming soon!');
+                return;
+            }
             // Add click animation
             event.currentTarget.style.transform = 'scale(0.95)';
             setTimeout(() => {
@@ -685,14 +827,37 @@
             // Open bot in new tab
             window.open(url, '_blank');
             
-            // Track usage (you can implement analytics here)
+            // Track usage (console log)
             console.log('Bot opened:', url);
         }
 
-        // Form submission
-        document.getElementById('requestForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
+        // Search functionality
+        document.getElementById('bot-search').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            document.querySelectorAll('.bot-card').forEach(card => {
+                const title = card.querySelector('.bot-title').textContent.toLowerCase();
+                const tags = Array.from(card.querySelectorAll('.tag')).map(tag => tag.textContent.toLowerCase());
+                const matches = title.includes(searchTerm) || tags.some(tag => tag.includes(searchTerm));
+                card.style.display = matches ? 'block' : 'none';
+            });
+        });
+
+        // Form submission with validation and loading (iframe method)
+        document.getElementById('requestForm').addEventListener('submit', function(e) {
+            // Basic validation
+            const email = document.getElementById('email').value;
+            const description = document.getElementById('description').value;
+            if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                showToast('Please enter a valid email address.', 'error');
+                e.preventDefault();
+                return;
+            }
+            if (description.length < 20) {
+                showToast('Please provide a more detailed description (min 20 characters).', 'error');
+                e.preventDefault();
+                return;
+            }
+
             const submitBtn = document.querySelector('.submit-btn');
             const btnText = submitBtn.querySelector('.btn-text');
             const loading = submitBtn.querySelector('.loading');
@@ -702,42 +867,34 @@
             loading.style.display = 'inline-block';
             submitBtn.disabled = true;
             
-            // Get form data
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData.entries());
+            // Note: Iframe submission happens automatically. For error handling, you can listen to iframe load event
+            const iframe = document.querySelector('iframe[name="hidden_iframe"]');
+            iframe.onload = function() {
+                // Assume success for iframe (check GAS response in network tab for real errors)
+                setTimeout(() => {
+                    showToast('🎉 Request submitted successfully! I\'ll get back to you soon.', 'success');
+                    document.getElementById('requestForm').reset();
+                    btnText.style.display = 'inline';
+                    loading.style.display = 'none';
+                    submitBtn.disabled = false;
+                }, 500);
+            };
             
-            try {
-                // Simulate API call (replace with your Google Sheets integration)
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                
-                // Here you would integrate with Google Sheets API
-                // Example: await submitToGoogleSheets(data);
-                console.log('Form data:', data);
-                
-                // Show success message
-                showToast('🎉 Request submitted successfully! I\'ll get back to you soon.', 'success');
-                
-                // Reset form
-                this.reset();
-                
-            } catch (error) {
-                console.error('Error submitting form:', error);
-                showToast('❌ Error submitting request. Please try again.', 'error');
-            } finally {
-                // Reset button state
+            iframe.onerror = function() {
+                showToast('Error submitting request. Please check console or try again.', 'error');
                 btnText.style.display = 'inline';
                 loading.style.display = 'none';
                 submitBtn.disabled = false;
-            }
+            };
         });
-
+        
         // Toast notification
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
             const toastMessage = document.getElementById('toast-message');
             
             toastMessage.textContent = message;
-            toast.style.background = type === 'success' ? '#27ae60' : '#e74c3c';
+            toast.className = 'toast ' + (type === 'error' ? 'error' : ''); // Add error class
             toast.classList.add('show');
             
             setTimeout(() => {
@@ -764,7 +921,7 @@
                         requestAnimationFrame(updateCounter);
                     } else {
                         if (counter.id === 'user-count') {
-                            counter.textContent = '1.2k';
+                            counter.textContent = '0.5k';
                         } else {
                             counter.textContent = target;
                         }
@@ -811,26 +968,6 @@
                 observer.observe(card);
             });
         });
-
-        // Google Sheets integration function (you'll need to implement this)
-        async function submitToGoogleSheets(data) {
-            // Replace with your Google Apps Script URL
-            const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
-            
-            const response = await fetch(scriptURL, {
-                method: 'POST',
-                body: JSON.stringify(data),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-            
-            if (!response.ok) {
-                throw new Error('Failed to submit to Google Sheets');
-            }
-            
-            return response.json();
-        }
     </script>
 </body>
 </html>
