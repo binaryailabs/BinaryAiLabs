@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Bot Hub - Your Gateway to Intelligent Automation</title>
+    <style>
+        :root {
+            --toastmaster-blue: #004165;
+            --toastmaster-light-blue: #0066a1;
+            --toastmaster-gold: #d4a574;
+            --toastmaster-light-gold: #e6c799;
+            --white: #ffffff;
+            --light-gray: #f8f9fa;
+            --dark-gray: #2c3e50;
+            --success-green: #27ae60;
+            --shadow: 0 10px 30px rgba(0, 65, 101, 0.1);
+            --shadow-hover: 0 20px 40px rgba(0, 65, 101, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-gray);
+            background: linear-gradient(135deg, var(--light-gray) 0%, var(--white) 100%);
+            overflow-x: hidden;
+        }
+
+        /* Persistent Banner */
+        .persistent-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, var(--toastmaster-blue), var(--toastmaster-light-blue));
+            color: var(--white);
+            padding: 12px 20px;
+            z-index: 1000;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transform: translateY(-100%);
+            animation: slideDown 0.5s ease-out 1s forwards;
+        }
+
+        .banner-text {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .banner-pulse {
+            width: 8px;
+            height: 8px;
+            background: var(--toastmaster-gold);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.2); }
+        }
+
+        @keyframes slideDown {
+            to { transform: translateY(0); }
+        }
+
+        /* Header */
+        header {
+            background: var(--white);
+            padding: 80px 0 60px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--toastmaster-blue) 0%, var(--toastmaster-light-blue) 100%);
+            opacity: 0.05;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .creator-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, var(--toastmaster-gold), var(--toastmaster-light-gold));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: var(--toastmaster-blue);
+            font-weight: bold;
+            box-shadow: var(--shadow);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            font-size: 3.2rem;
+            color: var(--toastmaster-blue);
+            margin-bottom: 20px;
+            font-weight: 700;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--toastmaster-light-blue);
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--toastmaster-gold);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--toastmaster-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Bots Grid */
+        .bots-section {
+            padding: 80px 0;
+            background: var(--light-gray);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--toastmaster-blue);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--toastmaster-light-blue);
+            margin-bottom: 60px;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .bots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .bot-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .bot-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--toastmaster-gold);
+        }
+
+        .bot-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 165, 116, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .bot-card:hover::before {
+            left: 100%;
+        }
+
+        .bot-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, var(--toastmaster-blue), var(--toastmaster-light-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: var(--white);
+            position: relative;
+            z-index: 1;
+        }
+
+        .bot-title {
+            font-size: 1.4rem;
+            color: var(--toastmaster-blue);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .bot-description {
+            color: var(--dark-gray);
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .bot-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .tag {
+            background: var(--toastmaster-light-gold);
+            color: var(--toastmaster-blue);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Request Form Section */
+        .request-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--toastmaster-blue) 0%, var(--toastmaster-light-blue) 100%);
+            color: var(--white);
+        }
+
+        .request-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-hover);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--toastmaster-blue);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--toastmaster-gold);
+            box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.1);
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--toastmaster-blue), var(--toastmaster-light-blue));
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 65, 101, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-gray);
+            color: var(--white);
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: var(--toastmaster-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--toastmaster-gold);
+            transform: translateY(-3px);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--success-green);
+            color: var(--white);
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1001;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .persistent-banner {
+                font-size: 0.9rem;
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .stats-bar {
+                gap: 20px;
+            }
+
+            .stat-number {
+                font-size: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .bots-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .request-form {
+                margin: 0 20px;
+                padding: 30px 20px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: var(--white);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Persistent Banner -->
+    <div class="persistent-banner">
+        <div class="banner-text">
+            <span class="banner-pulse"></span>
+            Got an idea for a custom AI bot? Request it below and I'll build it for you!
+            <span class="banner-pulse"></span>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-bg"></div>
+        <div class="container">
+            <div class="creator-image">
+                <!-- Replace with your image: <img src="your-image.jpg" alt="Creator" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"> -->
+                AI
+            </div>
+            <h1>AI Bot Hub</h1>
+            <p class="subtitle">Your Gateway to Intelligent Automation & Custom AI Solutions</p>
+            
+            <div class="stats-bar">
+                <div class="stat">
+                    <span class="stat-number" id="bot-count">12</span>
+                    <span class="stat-label">Active Bots</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" id="user-count">1.2k</span>
+                    <span class="stat-label">Happy Users</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" id="request-count">47</span>
+                    <span class="stat-label">Requests Fulfilled</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Bots Section -->
+    <section class="bots-section">
+        <div class="container">
+            <h2 class="section-title">Available AI Bots</h2>
+            <p class="section-subtitle">Discover powerful AI assistants designed to streamline your workflow and boost productivity</p>
+            
+            <div class="bots-grid" id="botsGrid">
+                <!-- Sample bots - you can modify these -->
+                <div class="bot-card" onclick="openBot('https://chat.openai.com/g/g-example1')">
+                    <div class="bot-icon">📝</div>
+                    <h3 class="bot-title">Content Writer Pro</h3>
+                    <p class="bot-description">Creates engaging blog posts, articles, and marketing copy with SEO optimization.</p>
+                    <div class="bot-tags">
+                        <span class="tag">Writing</span>
+                        <span class="tag">SEO</span>
+                        <span class="tag">Marketing</span>
+                    </div>
+                </div>
+
+                <div class="bot-card" onclick="openBot('https://chat.openai.com/g/g-example2')">
+                    <div class="bot-icon">💼</div>
+                    <h3 class="bot-title">Business Analyst</h3>
+                    <p class="bot-description">Analyzes market trends, creates reports, and provides strategic insights for decision making.</p>
+                    <div class="bot-tags">
+                        <span class="tag">Analytics</span>
+                        <span class="tag">Strategy</span>
+                        <span class="tag">Reports</span>
+                    </div>
+                </div>
+
+                <div class="bot-card" onclick="openBot('https://chat.openai.com/g/g-example3')">
+                    <div class="bot-icon">🎨</div>
+                    <h3 class="bot-title">Design Assistant</h3>
+                    <p class="bot-description">Helps with UI/UX design, color schemes, and creative visual solutions.</p>
+                    <div class="bot-tags">
+                        <span class="tag">Design</span>
+                        <span class="tag">UI/UX</span>
+                        <span class="tag">Creative</span>
+                    </div>
+                </div>
+
+                <div class="bot-card" onclick="openBot('https://chat.openai.com/g/g-example4')">
+                    <div class="bot-icon">💻</div>
+                    <h3 class="bot-title">Code Mentor</h3>
+                    <p class="bot-description">Provides coding help, code reviews, and programming tutorials across multiple languages.</p>
+                    <div class="bot-tags">
+                        <span class="tag">Programming</span>
+                        <span class="tag">Education</span>
+                        <span class="tag">Debug</span>
+                    </div>
+                </div>
+
+                <div class="bot-card" onclick="openBot('https://chat.openai.com/g/g-example5')">
+                    <div class="bot-icon">📊</div>
+                    <h3 class="bot-title">Data Wizard</h3>
+                    <p class="bot-description">Analyzes datasets, creates visualizations, and extracts meaningful insights from data.</p>
+                    <div class="bot-tags">
+                        <span class="tag">Data Science</span>
+                        <span class="tag">Analytics</span>
+                        <span class="tag">Visualization</span>
+                    </div>
+                </div>
+
+                <div class="bot-card" onclick="openBot('https://chat.openai.com/g/g-example6')">
+                    <div class="bot-icon">🗣️</div>
+                    <h3 class="bot-title">Speech Coach</h3>
+                    <p class="bot-description">Helps improve public speaking skills, presentation delivery, and communication techniques.</p>
+                    <div class="bot-tags">
+                        <span class="tag">Public Speaking</span>
+                        <span class="tag">Communication</span>
+                        <span class="tag">Training</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Request Section -->
+    <section class="request-section" id="request-section">
+        <div class="container">
+            <h2 class="section-title">Request a Custom Bot</h2>
+            <p class="section-subtitle">Have a specific need? Let me create a custom AI bot tailored to your requirements!</p>
+            
+            <form class="request-form" id="requestForm">
+                <div class="form-group">
+                    <label for="name">Your Name *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bot-type">Bot Category</label>
+                    <select id="bot-type" name="bot-type">
+                        <option value="">Select a category</option>
+                        <option value="business">Business & Finance</option>
+                        <option value="creative">Creative & Design</option>
+                        <option value="technical">Technical & Development</option>
+                        <option value="education">Education & Training</option>
+                        <option value="productivity">Productivity & Organization</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bot-name">Proposed Bot Name</label>
+                    <input type="text" id="bot-name" name="bot-name" placeholder="What would you like to call your bot?">
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Detailed Description *</label>
+                    <textarea id="description" name="description" placeholder="Describe what you want your bot to do, what problems it should solve, and any specific features you need..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="priority">Priority Level</label>
+                    <select id="priority" name="priority">
+                        <option value="low">Low - Nice to have</option>
+                        <option value="medium" selected>Medium - Would be helpful</option>
+                        <option value="high">High - Really need this</option>
+                        <option value="urgent">Urgent - Business critical</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="submit-btn">
+                    <span class="btn-text">Submit Request</span>
+                    <span class="loading" style="display: none;"></span>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2024 AI Bot Hub. Empowering productivity through intelligent automation.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">📧</a>
+                    <a href="#" class="social-link">💼</a>
+                    <a href="#" class="social-link">🐙</a>
+                </div>
+            </div>
+            <p style="font-size: 0.9rem; opacity: 0.8;">Built with ❤️ for the AI community</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span id="toast-message">Request submitted successfully!</span>
+    </div>
+
+    <script>
+        // Bot interaction
+        function openBot(url) {
+            // Add click animation
+            event.currentTarget.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                event.currentTarget.style.transform = '';
+            }, 150);
+
+            // Open bot in new tab
+            window.open(url, '_blank');
+            
+            // Track usage (you can implement analytics here)
+            console.log('Bot opened:', url);
+        }
+
+        // Form submission
+        document.getElementById('requestForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.querySelector('.submit-btn');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const loading = submitBtn.querySelector('.loading');
+            
+            // Show loading state
+            btnText.style.display = 'none';
+            loading.style.display = 'inline-block';
+            submitBtn.disabled = true;
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+            
+            try {
+                // Simulate API call (replace with your Google Sheets integration)
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Here you would integrate with Google Sheets API
+                // Example: await submitToGoogleSheets(data);
+                console.log('Form data:', data);
+                
+                // Show success message
+                showToast('🎉 Request submitted successfully! I\'ll get back to you soon.', 'success');
+                
+                // Reset form
+                this.reset();
+                
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                showToast('❌ Error submitting request. Please try again.', 'error');
+            } finally {
+                // Reset button state
+                btnText.style.display = 'inline';
+                loading.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Toast notification
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            toast.style.background = type === 'success' ? '#27ae60' : '#e74c3c';
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+
+        // Counter animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+                const target = parseInt(counter.textContent.replace(/[^\d]/g, ''));
+                let current = 0;
+                const increment = target / 50;
+                
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        if (counter.id === 'user-count') {
+                            counter.textContent = (current / 1000).toFixed(1) + 'k';
+                        } else {
+                            counter.textContent = Math.ceil(current);
+                        }
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        if (counter.id === 'user-count') {
+                            counter.textContent = '1.2k';
+                        } else {
+                            counter.textContent = target;
+                        }
+                    }
+                };
+                
+                updateCounter();
+            });
+        }
+
+        // Initialize animations when page loads
+        window.addEventListener('load', () => {
+            setTimeout(animateCounters, 1000);
+        });
+
+        // Smooth scroll to request section when banner is clicked
+        document.querySelector('.persistent-banner').addEventListener('click', () => {
+            document.getElementById('request-section').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+
+        // Add intersection observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe bot cards for scroll animations
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.bot-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'all 0.6s ease';
+                observer.observe(card);
+            });
+        });
+
+        // Google Sheets integration function (you'll need to implement this)
+        async function submitToGoogleSheets(data) {
+            // Replace with your Google Apps Script URL
+            const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
+            
+            const response = await fetch(scriptURL, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (!response.ok) {
+                throw new Error('Failed to submit to Google Sheets');
+            }
+            
+            return response.json();
+        }
+    </script>
+</body>
+</html>
