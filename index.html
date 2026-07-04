@@ -552,24 +552,24 @@
                 <img src="assets/images/creator.png" alt="Akshay Singh, DTM - Creator" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: top center; border-radius: 50%;">
             </div>
             <h2>Akshay Singh, DTM</h2>
-            <h1>GPT Bots for Toastmasters</h1>
+            <h1>Tools for Toastmasters</h1>
             <p class="subtitle">Your Gateway to Intelligent Automation & Custom AI Solutions for members, club officers and district officers</p>
             
             <div class="stats-bar">
                 <div class="stat">
-                    <span class="stat-number" id="bot-count">11</span>
-                    <span class="stat-label">Active Bots</span>
+                    <span class="stat-number" id="bot-count">12</span>
+                    <span class="stat-label">Active Tools</span>
                 </div>
                 <div class="stat">
-                    <span class="stat-number" id="user-count">0.5k</span>
+                    <span class="stat-number" id="user-count">900</span>
                     <span class="stat-label">Happy Users</span>
                 </div>
                 <div class="stat">
-                    <span class="stat-number" id="requests-received">10</span>
+                    <span class="stat-number" id="requests-received">20</span>
                     <span class="stat-label">Requests Received</span>
                 </div>
                 <div class="stat">
-                    <span class="stat-number" id="requests-fulfilled">5</span>
+                    <span class="stat-number" id="requests-fulfilled">10</span>
                     <span class="stat-label">Requests Fulfilled</span>
                 </div>
             </div>
@@ -579,8 +579,8 @@
     <!-- Bots Section -->
     <section class="bots-section">
         <div class="container">
-            <h2 class="section-title">Available AI Bots for Toastmasters</h2>
-            <p class="section-subtitle">Discover powerful AI assistants designed to streamline <br>your learning journey and make it more productive.</p>
+            <h2 class="section-title">Available Tools for Toastmasters</h2>
+            <p class="section-subtitle">Discover powerful AI assistants and Tools designed to streamline <br>your learning journey and make it more productive.</p>
             <div class="search-container">
                 <input type="text" id="bot-search" placeholder="Search bots by name or tag...">
             </div>
@@ -718,6 +718,18 @@
                     </div>
                 </div>
 
+                <!-- TM_PR Calendar Maker -->
+                <div class="bot-card" role="button" aria-label="PR Calendar Maker Tool" onclick="openBot('https://binaryailabs.github.io/pr-calendar-maker/')">
+                    <div class="bot-icon">🗓️</div>
+                    <h3 class="bot-title">PR Calendar Maker</h3>
+                    <p class="bot-description">Create PR Calendar. Add your events and import calendar to your google calendar.</p>
+                    <div class="bot-tags">
+                        <span class="tag">Automation</span>
+                        <span class="tag">Planning</span>
+                        <span class="tag">Resources</span>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -812,7 +824,7 @@
             <div class="footer-content">
                 <p>&copy; 2025 BinaryAILabs. Empowering productivity for learning through intelligent automation.</p>
                 <div class="social-links">
-                    <a href="https://linkedin.com/in/yourprofile" class="social-link" aria-label="LinkedIn">💼</a>
+                    <a href="https://linkedin.com/in/akshaysinghnew" class="social-link" aria-label="LinkedIn">💼</a>
                     <a href="https://x.com/yourhandle" class="social-link" aria-label="X (Twitter)">🐦</a>
                 </div>
             </div>
@@ -935,7 +947,7 @@
                         requestAnimationFrame(updateCounter);
                     } else {
                         if (counter.id === 'user-count') {
-                            counter.textContent = '0.5k';
+                            counter.textContent = '900';
                         } else {
                             counter.textContent = target;
                         }
